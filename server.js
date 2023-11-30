@@ -11,10 +11,10 @@ app.get("/", async function(req, res){
 
   try{
     await prisma.$queryRaw("SELECT 1")
-    res.send(200).json({status: "ok", postgres: "ok" })
+    res.status(200).json({status: "ok", postgres: "ok" })
   
   }catch(err){
-    res.send(200).json({status: "parcial", postgres: "bad" })
+    res.status(200).json({status: "parcial", postgres: "bad" })
   }
 
 
