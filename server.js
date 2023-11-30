@@ -12,6 +12,49 @@ app.get("/professores", async function(req, res){
   res.status(200).json(professores)
 })
 
+app.get("/professores/:id/demitidos", async function (req, res){
+  const id = req.params.id
+
+  const professores = await prisma.professor.findMany({where: {demitido: true }});
+  res.status(200).json(professores)
+
+})
+
+app.put("/professores/:id/demitidos", async function (req, res){
+  const id = req.params.id
+
+  const professor = await prisma.professor.findUnique({where: {id}});
+
+  if(professor==null) {
+    res.status(404).send()
+    return
+  }
+
+  if(professor.demitido){
+    res.status(422).send("Professor já está demitido")
+    return
+  }
+
+  await prisma.professor.update({where: {id}, data: {...professor, demitido: true}})
+
+  res.status(204).send()
+
+})
+
+app.get("/professores/:id", async function(req, res){
+  const id = req.params.id
+
+  const professor = await prisma.professor.findUnique({where: {id, }});
+
+  if(professor==null) {
+    res.status(404).send()
+    return
+  }
+
+
+  res.status(200).json(professor)
+})
+
 app.post("/professores", async function(req, res){
 
   try {
