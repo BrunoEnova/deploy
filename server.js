@@ -10,11 +10,11 @@ const prisma = new PrismaClient();
 app.get("/", async function(req, res){
 
   try{
-    await prisma.$queryRaw("SELECT 1")
+    await db.$queryRaw`SELECT 1`;
     res.status(200).json({status: "ok", postgres: "ok" })
   
   }catch(err){
-    res.status(200).json({status: "parcial", postgres: "bad" })
+    res.status(200).json({status: "parcial", postgres: "bad", error: err.message })
   }
 
 
