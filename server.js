@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 app.get("/", async function(req, res){
 
   try{
-    await db.$queryRaw`SELECT 1`;
+    await prisma.$queryRaw`SELECT 1`;
     res.status(200).json({status: "ok", postgres: "ok" })
   
   }catch(err){
