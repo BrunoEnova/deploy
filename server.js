@@ -7,6 +7,19 @@ app.use(express.json())
 
 const prisma = new PrismaClient();
 
+app.get("/", async function(req, res){
+
+  try{
+    await prisma.$queryRaw("SELECT 1")
+    res.send(200).json({status: "ok", postgres: "ok" })
+  
+  }catch(err){
+    res.send(200).json({status: "parcial", postgres: "bad" })
+  }
+
+
+})
+
 app.get("/professores", async function(req, res){
   const professores = await prisma.professor.findMany();
   res.status(200).json(professores)
